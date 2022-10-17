@@ -1,0 +1,129 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+@mixin checkboxSize($size) {
+  .checkbox__box {
+    min-height: $size;
+    @include square($size, false, true);
+  }
+
+  .checkbox__icon {
+    svg {
+      @include square($size - spacing(), false, true)
+    }
+  }
+}
+
+.checkbox {
+  display: flex;
+  cursor: pointer;
+  max-width: fit-content;
+
+  &.no-wrap {
+    white-space: nowrap;
+  }
+
+  &.small {
+    @include checkboxSize(spacing(2));
+  }
+
+  &.large {
+    @include checkboxSize(spacing(3));
+  }
+
+  &.multi {
+    margin: spacing(0.5);
+  }
+
+  &__container {
+    margin: spacing(-0.5);
+    flex-wrap: wrap;
+
+    &:not(.row) {
+      @include flex-column;
+      gap: spacing(2);
+    }
+  }
+
+  &__box {
+    border: 1px solid $gray;
+    border-radius: spacing(0.75);
+    background: $base;
+    transition: all 300ms ease;
+    @include flex-center;
+  }
+
+  &__icon {
+    pointer-events: none; // Иначе срабатывают event'ы с target = svg
+    @include iconColor($primary, false, true);
+
+    & * {
+      transition: all 300ms ease;
+    }
+  }
+
+  &__label {
+    color: $color-text-base;
+    margin-left: spacing(1.5);
+    line-height: 1.5 !important;
+    text-align: left;
+  }
+
+  &.enabled:hover {
+    .checkbox {
+      &__box {
+        border-color: $primary-middle;
+        @include iconColor($primary-middle, false, true);
+      }
+    }
+  }
+
+  &--alt {
+    .checkbox__label {
+      color: $color-text-base;
+    }
+
+    &.enabled:hover {
+      .checkbox__label {
+        color: $primary !important;
+      }
+    }
+  }
+
+  &.checked {
+    .checkbox {
+      &__box {
+        border-color: $primary;
+      }
+
+      &__icon {
+        @include iconColor($primary, false, true);
+        @include iconColor(transparent !important, false, false);
+      }
+    }
+  }
+
+  &.partially {
+    .checkbox {
+      &__box {
+        background: $base;
+        border-color: $primary;
+      }
+
+      &__icon {
+        @include iconColor($primary, false, true);
+      }
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+
+    .checkbox {
+      &__box {
+        background: $gray !important;
+        border-color: $gray !important;
+      }
+    }
+  }
+}

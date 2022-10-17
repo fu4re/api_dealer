@@ -1,0 +1,18 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.slider-card {
+  @include spaced-items(4, true);
+
+  &__title {
+    color: $color-text-alt;
+  }
+
+  &__row {
+    margin-bottom: spacing();
+  }
+
+  &__value {
+    margin-bottom: spacing(1.5);
+  }
+}

@@ -1,0 +1,30 @@
+@import "styles/mixins";
+@import "styles/colors";
+
+.tooltip {
+  &__container {
+    &.MuiTooltip-tooltip {
+      position: relative;
+      padding: 5px 8px;
+      border-radius: 3px;
+      background-color: $black;
+      color: $base;
+      font-size: 13px;
+      font-weight: 400 !important;
+      font-family: inherit;
+      letter-spacing: 0;
+      line-height: 1.25;
+      cursor: default !important;
+      @include text-wrapping;
+    }
+
+    .MuiTooltip-arrow {
+      color: $black;
+    }
+  }
+
+  &__icon {
+    @include icon(spacing(1.5), $base);
+    display: inline-flex;
+  }
+}

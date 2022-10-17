@@ -1,0 +1,57 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.loan {
+  gap: spacing(20);
+  padding-bottom: spacing(5);
+
+  &-fields {
+    align-items: flex-start !important;
+    @include flex-column;
+
+    &__block {
+      width: 100%;
+
+      &:first-child {
+        margin-bottom: spacing(8);
+      }
+
+      &:nth-child(2) {
+        margin-bottom: spacing(3);
+      }
+
+      &-title {
+        margin-bottom: spacing(6);
+      }
+    }
+  }
+
+  &__caption {
+    color: $color-text-alt;
+  }
+
+  &__full {
+    cursor: pointer;
+    margin-bottom: spacing(3);
+
+    &:hover {
+      color: lighten($primary, 15%);
+    }
+  }
+
+  &-form {
+    padding: spacing(10) 0 0;
+    margin: 0;
+    max-width: 100%;
+    min-height: auto;
+
+    &__buttons {
+      gap: spacing(2);
+      margin-top: spacing(5);
+    }
+  }
+
+  &__row {
+    gap: spacing(6);
+  }
+}

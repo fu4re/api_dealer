@@ -1,0 +1,158 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+@import 'styles/fonts';
+@import 'styles/variables';
+@import 'styles/texts';
+@import 'styles/default';
+
+html {
+  font-size: 16px;
+  color: $color-text-base;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  overflow: hidden;
+
+  &.scroll {
+    overflow-y: visible;
+  }
+}
+
+body {
+  position: relative;
+  font-family: $font-family;
+  overflow: visible !important; // MUI popover
+  padding-right: 0 !important; // MUI popover
+  height: 100%;
+  background-color: $base;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+}
+
+.MuiSnackbar-root {
+  max-width: 90vw;
+}
+
+.SnackbarContent-root {
+  min-width: auto !important;
+}
+
+.SnackbarItem-contentRoot {
+  border-radius: spacing() !important;
+
+  &:not(.snackbar--success):not(.snackbar--error):not(.snackbar--warning):not(.snackbar--info) {
+    background-color: $dark !important;
+  }
+}
+
+.SnackbarContainer-bottom {
+  width: auto !important;
+}
+
+.MuiCollapse-root {
+  width: fit-content;
+  margin-left: auto;
+}
+
+.MuiButtonBase-root {
+  &:not(.MuiTablePagination-menuItem) {
+    background-color: transparent !important;
+  }
+}
+
+.MuiSkeleton-root {
+  border-radius: spacing();
+  background-color: rgba($disabled, 0.2) !important;
+}
+
+.snackbar {
+  &--success,
+  &--error,
+  &--warning,
+  &--info {
+    .SnackbarItem-message {
+      padding: spacing() 0 spacing(0.75) !important;
+
+      svg {
+        transform: translateY(spacing(-0.25));
+      }
+    }
+  }
+}
+
+.MuiTooltip-tooltipPlacementBottom {
+  margin: spacing(1.5) 0 !important;
+}
+
+.MuiSnackbarContent {
+  &-root {
+    flex-wrap: nowrap;
+    flex-grow: 0;
+    padding: spacing(0.75) spacing(1.75) !important;
+  }
+
+  &-action {
+    margin-right: 0;
+  }
+
+  &-message {
+    display: flex;
+    flex: 1 1 auto;
+    @include text-wrapping;
+
+    .MuiSvgIcon-root {
+      margin-right: spacing(1) !important;
+    }
+
+    .push__content {
+      max-height: spacing(37.5);
+      overflow-y: auto;
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $base;
+      }
+
+      &::-webkit-scrollbar {
+        border-left: none;
+
+        &:horizontal {
+          border-top: none;
+        }
+      }
+    }
+  }
+}
+
+.truncate {
+  @include text-truncate;
+}
+
+.select__menu-portal {
+  z-index: 2500 !important; // больше, чем у диалогов
+}
+
+.MuiTooltip-popper {
+  z-index: 3000 !important;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.hide {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  @include visually-hidden;
+  @include hide();
+  @include square(0);
+}
+
+.show {
+  @include show();
+}

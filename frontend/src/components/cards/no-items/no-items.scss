@@ -1,0 +1,17 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.no-items {
+  padding: 0 spacing(2);
+  @include flex-column;
+  @include flex-center;
+
+  &__image {
+    margin-bottom: spacing();
+    min-height: spacing(34);
+  }
+
+  &__title {
+    margin-bottom: spacing(2);
+  }
+}

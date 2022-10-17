@@ -1,0 +1,14 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.login {
+  margin: spacing(3) spacing(2);
+  @include auth-form;
+
+  &-form {
+    &__logo {
+      margin: 0 auto spacing(5);
+      transform: translateX(spacing(-1));
+    }
+  }
+}

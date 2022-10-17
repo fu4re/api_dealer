@@ -1,0 +1,48 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+@import 'styles/variables';
+
+.confirm {
+  $c: &;
+
+  box-shadow: 0 spacing(1.5) spacing() rgba($gray-shadow, 0.6);
+
+  &-paper {
+    border-radius: spacing(1.25) !important;
+    overflow: hidden !important;
+    max-width: spacing(40) !important;
+  }
+
+  &__header {
+    padding: spacing(2);
+    background: rgba($gray, 0.3);
+    @include iconColor($primary, false, true);
+  }
+
+  &__content {
+    padding: spacing(2) spacing(2) spacing(3);
+  }
+
+  &__message,
+  &__error {
+    & + #{$c} {
+      &__buttons {
+        margin-top: spacing(4);
+      }
+    }
+  }
+
+  &__buttons {
+    gap: spacing(2);
+    @include flex-column;
+  }
+
+  &__error {
+    margin-top: spacing(2);
+
+    h1,
+    p {
+      font-size: 16px;
+    }
+  }
+}

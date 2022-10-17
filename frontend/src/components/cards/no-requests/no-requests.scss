@@ -1,0 +1,11 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.no-requests {
+  margin-top: spacing(9.75);
+
+  &__text {
+    color: $color-text-alt;
+    margin-bottom: spacing(4);
+  }
+}

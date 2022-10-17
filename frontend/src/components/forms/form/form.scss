@@ -1,0 +1,45 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+@import 'styles/variables';
+
+.form {
+  position: relative;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: spacing(5);
+  align-items: flex-start !important;
+  max-width: $container-small-width;
+  @include flex-column;
+  @include form-container;
+
+  &__row {
+    width: 100%;
+    gap: spacing(3);
+  }
+
+  &__content {
+    width: 100%;
+    align-items: flex-start !important;
+    @include flex-column;
+  }
+
+  &__buttons {
+    gap: spacing(2);
+  }
+
+  &__button {
+    margin-top: auto;
+  }
+
+  &__title {
+    margin-bottom: spacing(3);
+    gap: spacing(2);
+    width: 100%;
+  }
+
+  .field {
+    margin-bottom: spacing(4);
+  }
+}

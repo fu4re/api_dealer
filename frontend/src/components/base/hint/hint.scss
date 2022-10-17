@@ -1,0 +1,35 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.hint-icon {
+  $p: &;
+
+  font-size: 12px;
+  margin-left: spacing();
+  margin-top: spacing(-0.25);
+  cursor: pointer;
+  color: $base;
+  background: $primary;
+  transition: all 300ms ease;
+  user-select: auto !important;
+  @include square(spacing(2.25), true, true);
+  @include flex-center;
+
+  &:not(#{$p}--disabled):hover {
+    background: $primary-middle;
+  }
+
+  &--inline {
+    display: inline-block;
+  }
+
+  &--clickable {
+    cursor: pointer;
+  }
+
+  &.small {
+    @include square(spacing(1.75), true, true);
+    font-size: 10px;
+    line-height: 1 !important;
+  }
+}

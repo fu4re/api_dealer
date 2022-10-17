@@ -1,0 +1,229 @@
+@import 'styles/mixins';
+
+.select {
+  $p: &;
+
+  position: relative;
+  flex: 1 1 auto;
+  border: none !important;
+  width: 100%;
+
+  &.float-menu {
+    #{$p} {
+      &__menu {
+        position: absolute !important;
+      }
+    }
+  }
+
+  &-list {
+    max-height: spacing(37.5) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  &__value-container {
+    $c: &;
+
+    flex: 1 1 auto !important;
+    padding-left: spacing(2) !important;
+    display: flex !important;
+
+    &--is-multi {
+      &.select__value-container--has-value {
+        margin: spacing(-0.625) 0;
+      }
+    }
+  }
+
+  &-indicator {
+    @include iconColor($primary !important, false, true);
+  }
+
+  &__input {
+    &-container {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  &__textarea {
+    &-container {
+      display: flex;
+      align-items: center;
+      margin: spacing(0.25) 0;
+      padding: spacing(0.25) 0;
+      width: spacing(0.125);
+
+      &--has-value {
+        width: 100%;
+      }
+    }
+
+    &-input {
+      background: none;
+      border-width: 0;
+      font-size: inherit;
+      outline: 0;
+      padding: 0;
+      color: inherit;
+      resize: none;
+      @include size(100%, spacing(1.75));
+    }
+  }
+
+  &__placeholder {
+    width: 0;
+    z-index: 0;
+    white-space: nowrap;
+    margin: 0 !important;
+    padding-left: spacing(0.5);
+    color: $gray-dark !important;
+  }
+
+  &__indicators-container {
+    display: flex;
+    align-items: center;
+    margin: auto 0 auto spacing(0.625);
+  }
+
+  &__control {
+    font-size: 16px;
+    min-height: spacing(7.25) !important;
+    flex-wrap: nowrap !important;
+    background-color: $base !important;
+    border: 1px solid $gray !important;
+    border-radius: spacing() !important;
+    color: $color-text-base !important;
+    box-shadow: none !important;
+    padding: spacing(2) spacing(2) spacing(2) 0;
+
+    &:not(#{$p}__control--is-disabled) {
+      cursor: pointer !important;
+    }
+
+    &--is-disabled {
+      &,
+      &:hover {
+        background: $gray !important;
+        border: none !important;
+
+        #{$p} {
+          &__single-value {
+            color: $color-text-base;
+          }
+        }
+      }
+    }
+  }
+
+  &__input {
+    color: $color-text-base !important;
+  }
+
+  &.active {
+    .select {
+      &__control {
+        border-color: $primary !important;
+      }
+
+      &__single-value {
+        color: $color-text-base !important;
+        margin-left: spacing(0.25);
+      }
+    }
+  }
+
+  &__error {
+    color: $error !important;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 12px !important;
+    display: flex;
+    align-items: center;
+    margin-top: spacing(0.625) !important;
+    @include pos; // Чтобы меню отображалось корректно
+  }
+
+  &.isInvalid {
+    .select__control {
+      border-color: $error;
+    }
+  }
+
+  .select-indicator {
+    font-size: 15px;
+    margin-right: spacing(0.375);
+    text-align: center;
+
+    svg {
+      @include square(spacing(2), false, true);
+    }
+  }
+
+  &.disabled {
+    .select__indicators {
+      display: none;
+    }
+  }
+
+  &__loading-indicator,
+  &__indicator-separator {
+    display: none !important;
+  }
+
+  &__menu {
+    z-index: 10 !important;
+    margin-top: spacing() !important;
+    border: 1px solid $gray !important;
+    border-radius: spacing() !important;
+    box-shadow: none !important;
+    box-shadow: 0px spacing(0.5) spacing(0.75) rgba($gray, 0.4);
+    background-color: $base !important;
+    overflow: hidden !important;
+    position: relative !important;
+
+    &-list {
+      overflow-x: hidden !important;
+      padding: spacing(1.5) 0 !important;
+    }
+
+    &-notice {
+      color: $color-text-base;
+      text-align: center;
+      padding: spacing(2.5) spacing(1.25) !important;
+      font-size: 16px;
+    }
+  }
+
+  &__option {
+    padding: spacing(1.5) spacing();
+    margin: 0 spacing();
+    transition: all 300ms ease;
+    cursor: pointer;
+
+    &:hover,
+    &.added {
+      background: $primary-light;
+      color: $primary;
+    }
+
+    &__row {
+      &,
+      &-content {
+        flex: 1 1 auto;
+        overflow: hidden;
+        cursor: pointer;
+      }
+    }
+
+    &-text {
+      font-size: 16px;
+      color: $primary;
+    }
+
+    .svg-icon {
+      @include icon(spacing(3), $color-text-base);
+    }
+  }
+}

@@ -1,0 +1,85 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.item-box {
+  margin: spacing(0.5) spacing() spacing(0.5) 0;
+  background: $primary-light;
+  border-radius: spacing(0.75);
+  padding: spacing(0.5) spacing(0.75);
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  color: $color-text-base;
+  transition: all 300ms ease;
+  @include text-wrapping;
+
+  &--clickable {
+    &,
+    > * {
+      cursor: pointer !important;
+    }
+  }
+
+  &--active {
+    background-color: $primary;
+    border-color: $primary;
+    color: $base !important;
+  }
+
+  &--invalid {
+    border-color: $error !important;
+  }
+
+  &--disabled {
+    background-color: $gray !important;
+    color: $color-text-base !important;
+  }
+
+  &:not(.item-box--active):hover {
+    color: $primary;
+    box-shadow: 0 0 spacing() 0 rgba($primary, 0.2);
+  }
+
+  &__text {
+    line-height: 1 !important;
+  }
+
+  &__icon {
+    margin-right: spacing();
+    min-width: spacing(2.5);
+    @include iconSize(spacing(2.5) !important);
+    @include iconColor($primary-middle !important, false, true);
+  }
+
+  &__remover {
+    cursor: pointer;
+    margin-left: spacing(0.75) !important;
+    min-width: spacing(2);
+    transform: none !important;
+    @include flex-center;
+    @include iconSize(spacing(2) !important);
+    @include iconColor($primary-middle !important, false, true);
+
+    &:hover {
+      @include iconColor($primary !important, false, true);
+    }
+  }
+}
+
+.item-boxes {
+  .item-box {
+    &--active {
+      .item-box {
+        &__remover {
+          &:hover {
+            @include iconColor($base !important, false, true);
+          }
+        }
+
+        &__text {
+          font-size: 14px !important;
+        }
+      }
+    }
+  }
+}

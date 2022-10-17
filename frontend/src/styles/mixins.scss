@@ -1,0 +1,407 @@
+/* Base */
+@import 'colors';
+@import 'mq';
+
+@mixin flex-center($isInline: false) {
+  @if ($isInline) {
+    display: inline-flex;
+  } @else {
+    display: flex;
+  }
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column($isReverse: false) {
+  display: flex;
+  @if ($isReverse) {
+    flex-direction: column-reverse;
+  } @else {
+    flex-direction: column;
+  }
+}
+
+@mixin absoluteFill($bg-color: false, $z: false, $pos: absolute) {
+  position: $pos;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  @if ($bg-color) {
+    background-color: $bg-color;
+  }
+  @if ($z) {
+    z-index: $z;
+  }
+}
+
+/* Icons */
+
+@mixin iconColor($base: false, $hover: false, $stroke: false) {
+  @if ($base) {
+    svg * {
+      @if ($stroke) {
+        stroke: $base;
+      } @else {
+        fill: $base;
+      }
+    }
+  }
+
+  @if ($hover) {
+    &:hover {
+      svg * {
+        @if ($stroke) {
+          stroke: $hover;
+        } @else {
+          fill: $hover;
+        }
+      }
+    }
+  }
+}
+
+@mixin iconSize($size) {
+  width: $size;
+  min-width: $size;
+  height: $size;
+}
+
+@mixin icon($size: false, $color: false, $color-hover: false) {
+  .svg-icon {
+    @if ($size) {
+      @include iconSize($size);
+    }
+    @include iconColor($color, $color-hover);
+  }
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin text-wrapping {
+  white-space: pre-line;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin size($width, $height, $fix-min: false) {
+  height: $height;
+  width: $width;
+  @if ($fix-min) {
+    min-width: $width;
+  }
+}
+
+@mixin square($size, $is-round: false, $fix-min: false) {
+  @include size($size, $size, $fix-min);
+  @if ($is-round) {
+    border-radius: $size / 2;
+  }
+}
+
+@mixin pos($pos: absolute, $t: false, $r: false, $b: false, $l: false, $z: false) {
+  @if $pos {
+    position: $pos;
+  }
+  @if $t {
+    top: $t;
+  }
+  @if $r {
+    right: $r;
+  }
+  @if $b {
+    bottom: $b;
+  }
+  @if $l {
+    left: $l;
+  }
+  @if $z {
+    z-index: $z;
+  }
+}
+
+@mixin pos-fill($pos: absolute, $z: false) {
+  @include pos($pos, 0, 0, 0, 0, $z);
+}
+
+@mixin absolute-center($horizontal: true, $vertical: true) {
+  position: absolute;
+  @if ($horizontal and $vertical) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } @else if ($horizontal) {
+    left: 50%;
+    transform: translate(-50%, 0);
+  } @else if ($vertical) {
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
+
+@mixin pseudo($display: block, $pos: absolute, $content: '') {
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+@mixin absolute-border($child: false) {
+  position: relative;
+
+  &:after {
+    @include pos($l: 0, $r: 0, $b: 0, $z: 0);
+    @include pseudo();
+    height: 1px;
+    border-bottom: 1px solid $primary;
+  }
+
+  @if ($child) {
+    #{$child} {
+      @include pos(relative, $z: 1);
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin use-fade-in($duration: 700ms) {
+  animation: fade-in $duration;
+}
+
+/*
+ * Spacing
+ */
+
+@function spacing($size: 1) {
+  @return $size * 8px;
+}
+
+@mixin spaced-items($value, $is-vertical: false, $not-spacing: false) {
+  $prop: margin-right;
+
+  @if ($is-vertical) {
+    $prop: margin-bottom;
+  }
+
+  &:not(:last-child) {
+    @if ($not-spacing) {
+      #{$prop}: $value;
+    } @else {
+      #{$prop}: spacing($value);
+    }
+  }
+}
+
+@mixin centered($isVertical: false) {
+  @if ($isVertical) {
+    margin-top: auto;
+    margin-bottom: auto;
+  } @else {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@mixin hide() {
+  opacity: 0;
+  visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@mixin show() {
+  opacity: 1;
+  visibility: visible;
+  @include use-fade-in(150ms);
+}
+
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+@mixin fillBetweenMargins(
+  $color: false,
+  $z: -5,
+  $l: spacing(-0.67),
+  $r: spacing(-0.67),
+  $v: 0
+) {
+  .Calendar__day__inner:before {
+    content: '';
+    background-color: $color;
+    @include pos($l: $l, $r: $r, $t: $v, $b: $v, $z: $z);
+  }
+}
+
+@mixin removeFilling() {
+  &:last-child {
+    .Calendar__day__inner:before {
+      right: 0 !important;
+      border-radius: 0 !important;
+      border-top-right-radius: 50% !important;
+      border-bottom-right-radius: 50% !important;
+    }
+  }
+
+  &:first-child {
+    .Calendar__day__inner:before {
+      left: 0 !important;
+      border-radius: 0 !important;
+      border-top-left-radius: 50% !important;
+      border-bottom-left-radius: 50% !important;
+    }
+  }
+}
+
+@mixin circle-icon($bg: false) {
+  transition: all 0.3s ease;
+  @include square(spacing(7), true, true);
+  @include icon(spacing(2.5));
+  @include flex-center;
+
+  @if ($bg) {
+    background: $bg;
+  }
+}
+
+@mixin picker-container {
+  &__container {
+    display: flex;
+    height: spacing(25);
+    overflow: hidden;
+  }
+}
+
+@mixin underlined-link($color: $black) {
+  transition: all 300ms ease;
+  position: relative;
+
+  &::after {
+    content: '';
+    background-color: $color;
+    transition: all 300ms ease;
+    @include size(0, spacing(0.25));
+    @include pos($b: spacing(-1), $l: 0);
+  }
+
+  &:hover,
+  &:focus {
+    &:after {
+      width: 100%;
+    }
+  }
+}
+
+@mixin arrowAnimated {
+  .svg-icon {
+    transition: all 300ms ease;
+  }
+
+  &:hover {
+    .svg-icon {
+      transform: translateX(spacing(0.75));
+    }
+  }
+}
+
+@mixin chevronAnimated {
+  .svg-icon {
+    transition: all 300ms ease;
+    transform: rotate(90deg);
+  }
+
+  &:hover {
+    .svg-icon {
+      transform: rotate(90deg) translateY(spacing(0.25));
+    }
+  }
+}
+
+@mixin accordion-content($spacing: 3) {
+  &__content {
+    padding: spacing($spacing) 0;
+    margin: 0 spacing($spacing);
+    border-top: 1px solid $gray;
+  }
+}
+
+@mixin form-container {
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+@mixin card {
+  border-radius: spacing(1.5);
+  padding: spacing(3);
+  background: $base;
+  border: 1px solid $gray;
+  box-shadow: 0 spacing() spacing(1.5) rgba($gray-shadow, 0.25);
+}
+
+@mixin form-card {
+  width: 100%;
+  max-width: spacing(50);
+  min-height: auto;
+  @include card;
+}
+
+@mixin auth-form {
+  min-height: 100vh;
+  @include flex-center;
+
+  &-form {
+    @include form-card;
+
+    &__buttons {
+      width: 100%;
+      margin-top: spacing();
+      @include flex-column;
+    }
+  }
+}
+
+@mixin dropdown-offsets($left, $offset) {
+  &.dropdown__item--level_ {
+    @for $i from 1 through 10 {
+      &#{$i} {
+        padding-left: $left + $offset * $i;
+      }
+    }
+  }
+}

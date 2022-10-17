@@ -1,0 +1,80 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.pagination {
+  user-select: none;
+  @include iconColor($color-text-base, false, true);
+
+  svg {
+    @include square(spacing(3), false, true);
+  }
+
+  .MuiPaginationItem {
+    &-text {
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    &-ellipsis {
+      pointer-events: none;
+    }
+
+    &-root {
+      padding: spacing(0.75);
+      @include square(spacing(4.5), true, true);
+
+      &:hover {
+        background: $primary-light;
+      }
+
+      &.Mui-selected {
+        background: $primary;
+        color: $base;
+
+        &:hover {
+          background: $primary-middle;
+        }
+      }
+    }
+  }
+
+  .MuiPagination {
+    &-ul {
+      li {
+        @include spaced-items(0.5);
+
+        &:first-child,
+        &:last-child {
+          .MuiPaginationItem {
+            &-root {
+              $color: rgba($color-text-base, 0.14);
+
+              border: 1px solid $color;
+              transition: all 0.3s ease;
+              @include square(spacing(5), true, true);
+              @include icon(spacing(2));
+              @include flex-center;
+
+              &:hover {
+                background-color: $color;
+                transform: scale(1.1);
+              }
+            }
+          }
+        }
+
+        &:first-child {
+          margin-right: spacing();
+        }
+
+        &:last-child {
+          margin-left: spacing();
+        }
+      }
+    }
+  }
+
+  .MuiTouchRipple-root {
+    display: none;
+  }
+}

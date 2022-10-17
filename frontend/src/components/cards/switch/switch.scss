@@ -1,0 +1,11 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.switch-card {
+  gap: spacing(3);
+  @include spaced-items(3, true);
+
+  &__row {
+    gap: spacing(2);
+  }
+}

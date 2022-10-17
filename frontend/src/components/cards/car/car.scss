@@ -1,0 +1,61 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.car-card {
+  padding: 0;
+  overflow: hidden;
+  align-items: flex-start !important;
+  position: relative;
+  transition: box-shadow 300ms ease, outline 50ms linear;
+  grid-column: span 3;
+  border: none;
+  outline: 1px solid $gray !important;
+  max-width: spacing(43);
+  width: 100%;
+  @include flex-column;
+
+  &.active {
+    outline: 2px solid $primary !important;
+    box-shadow: 0 0 spacing(3) rgba($primary, 0.25);
+    pointer-events: none;
+  }
+
+  &:not(.active):not(.loading):hover {
+    box-shadow: 0 0 spacing(3) rgba($black, 0.25);
+    cursor: pointer;
+  }
+
+  &__logo {
+    width: spacing(6);
+    @include pos($t: spacing(), $l: spacing());
+  }
+
+  &__content {
+    padding: spacing(2);
+    @include flex-column;
+    @include square(100%, false, true);
+  }
+
+  &__image {
+    width: 100%;
+    min-height: spacing(28.75);
+    object-fit: cover;
+    object-position: center;
+    display: flex;
+    border-bottom: 1px solid $gray;
+  }
+
+  &__title,
+  &__features {
+    margin-bottom: spacing(2);
+  }
+
+  &__price {
+    margin-top: auto;
+  }
+
+  &__row {
+    gap: spacing(2);
+    @include spaced-items(1.5, true);
+  }
+}

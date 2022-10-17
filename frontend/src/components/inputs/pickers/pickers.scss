@@ -1,0 +1,46 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.picker-list {
+  flex: 1 1 auto;
+  min-width: 70px;
+  height: 100%;
+  overflow: hidden;
+  @include flex-column;
+
+  &:not(:first-child) {
+    border-left: 1px solid $gray;
+  }
+
+  &__label {
+    text-align: center;
+    font-size: 12px;
+    color: $color-text-base;
+    padding: spacing();
+  }
+
+  &__items {
+    overflow-x: auto;
+    border-top: 1px solid $gray;
+    padding: spacing(0.625) 0;
+    width: 100%;
+  }
+
+  &__item {
+    cursor: pointer;
+    text-align: center;
+    padding: spacing(0.5) 0;
+    font-size: 14px;
+    color: $color-text-base;
+
+    &--active {
+      color: $primary;
+      background: $gray;
+    }
+
+    &:hover {
+      background: $gray;
+      color: $color-text-base;
+    }
+  }
+}

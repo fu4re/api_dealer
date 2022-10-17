@@ -1,0 +1,20 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.notice {
+  width: 100%;
+  margin-bottom: spacing(7);
+  padding: 0 spacing(2);
+  @include flex-column;
+  @include flex-center;
+
+  &__image {
+    margin: spacing(6) spacing(7.5) spacing(3);
+    min-height: spacing(21.5);
+  }
+
+  &__text {
+    margin-top: spacing(2);
+    color: $color-text-alt;
+  }
+}

@@ -1,0 +1,35 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+@import 'styles/variables';
+
+.crm {
+  padding-bottom: spacing(3) !important;
+
+  &__search {
+    max-width: spacing(70);
+  }
+
+  &-reports,
+  &-card {
+    margin-top: spacing(5);
+  }
+
+  &-card {
+    background: $gray-light;
+    padding: spacing(3) 0 spacing();
+    align-items: flex-start !important;
+    @include flex-column;
+
+    &__header {
+      gap: spacing(2);
+      padding: 0 spacing(2) spacing(3);
+      width: 100%;
+    }
+  }
+
+  .tabs {
+    &__items {
+      border-bottom: 1px solid $gray;
+    }
+  }
+}

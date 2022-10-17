@@ -1,0 +1,14 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.warning-text {
+  color: $color-text-base;
+  margin-top: spacing(0.625);
+  font-size: 12px;
+
+  label {
+    color: $error;
+    font-size: 12px;
+    margin-right: spacing(0.625);
+  }
+}

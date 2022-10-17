@@ -1,0 +1,26 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.field {
+  width: 100%;
+  text-align: left;
+
+  &__error {
+    color: $error;
+    margin-top: spacing();
+  }
+
+  &__caption {
+    margin-bottom: spacing();
+    color: $color-text-alt;
+    @include text-truncate;
+  }
+
+  &__title {
+    padding-bottom: spacing();
+  }
+
+  &-wrapper {
+    gap: spacing();
+  }
+}

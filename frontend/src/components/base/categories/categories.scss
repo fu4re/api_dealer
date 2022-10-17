@@ -1,0 +1,48 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.categories {
+  flex: 1;
+  margin-bottom: spacing(2);
+
+  &__items {
+    gap: spacing(2);
+  }
+
+  &__item {
+    cursor: pointer;
+    user-select: none;
+    padding: spacing();
+    border-radius: spacing(0.75);
+    border: 1px solid $gray;
+    transition: background-color 300ms ease;
+    color: $color-text-base;
+
+    &-text {
+      transform: translateY(spacing(-0.125));
+      white-space: nowrap;
+    }
+
+    &-row {
+      gap: spacing(1.25);
+
+      .badge.small {
+        border: 1px solid $gray;
+        padding: 0 spacing(0.5) spacing(0.25);
+      }
+    }
+
+    &:hover {
+      color: $base;
+      background-color: $primary;
+    }
+
+    &.active {
+      cursor: default;
+      pointer-events: none;
+      background-color: $primary;
+      color: $base;
+      border-color: $primary;
+    }
+  }
+}

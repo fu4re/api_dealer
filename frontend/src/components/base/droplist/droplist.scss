@@ -1,0 +1,149 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.dropmenu {
+  text-align: left;
+  list-style: none;
+  background-color: $base;
+  user-select: none;
+  box-shadow: 0 spacing(0.5) spacing(0.75) rgba($gray-shadow, 0.4);
+  border: 1px solid $gray;
+  margin-top: spacing(0.75);
+  padding: spacing();
+  border-radius: spacing() !important;
+
+  &--absolute {
+    min-width: 100%;
+    @include pos($t: 100%, $l: 0, $z: 6);
+  }
+
+  &--with-width {
+    .dropmenu__item__text {
+      flex: 1;
+    }
+  }
+
+  &--auto-height {
+    height: auto !important;
+    min-height: spacing(5);
+
+    &:after {
+      content: '';
+      display: block;
+      min-height: inherit;
+      visibility: hidden;
+    }
+
+    .dropmenu__text {
+      white-space: pre-line;
+      padding: spacing(0.75) 0;
+    }
+  }
+
+  &__no-items {
+    padding: spacing(0.75);
+    color: $color-text-base;
+  }
+
+  &__text {
+    flex: 1 1 auto;
+    padding: 0;
+    text-align: left;
+    line-height: 1;
+  }
+
+  &.with-icon {
+    > .dropmenu__item {
+      &.added {
+        background: none;
+      }
+    }
+  }
+
+  &__item {
+    $i: &;
+
+    display: flex;
+    align-items: center;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    color: $color-text-base;
+    padding: spacing(2) spacing(2);
+    white-space: pre-line;
+    transition: all 300ms ease;
+    @include iconColor($primary, false, true);
+
+    svg {
+      @include square(spacing(2), false, true);
+    }
+
+    .confirm-icon {
+      svg {
+        margin-left: spacing(-0.375);
+        @include square(spacing(2.5), false, true);
+      }
+    }
+
+    &.added {
+      background-color: darken($primary-light, 8%);
+    }
+
+    &.selected {
+      color: $color-text-base;
+      background: $gray;
+    }
+
+    &:not(.added) {
+      cursor: pointer;
+
+      &:hover {
+        background: $primary-light;
+        @include iconColor($primary, false, true);
+
+        #{$i}__title {
+          color: $primary;
+        }
+      }
+
+      &:active {
+        background: darken($primary-light, 10%);
+      }
+    }
+
+    .svg-icon + #{$i}__text {
+      margin-left: spacing(0.75);
+    }
+
+    &__title {
+      line-height: 1 !important;
+    }
+
+    &__subtitle {
+      @include text-truncate;
+    }
+
+    &__text {
+      display: inline-block;
+      margin-right: auto;
+      max-width: 100%;
+
+      p {
+        @include text-truncate;
+      }
+    }
+
+    &__selected-indicator {
+      opacity: 0;
+      margin-left: spacing(1.25);
+      @include icon(spacing(2));
+      @include iconColor($primary, false, true);
+    }
+
+    &.added {
+      .dropmenu__item__selected-indicator {
+        opacity: 1;
+      }
+    }
+  }
+}

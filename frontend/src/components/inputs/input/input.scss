@@ -1,0 +1,233 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+$inputBaseFontSize: 16px;
+
+.input {
+  $i: &;
+
+  display: flex;
+  flex: 1 1 auto;
+  font-family: inherit;
+  min-width: 0;
+  height: 100%;
+  color: $color-text-base;
+  border: none;
+  background: none;
+
+  &::-ms-reveal,
+  &::-ms-clear,
+  &[type='password']::-ms-reveal,
+  &[type='password']::-ms-clear {
+    display: none !important;
+  }
+
+  &-row {
+    background: $base;
+    border: 1px solid $gray;
+    border-radius: spacing();
+    width: 100%;
+    overflow: hidden;
+    transition: all 300ms ease;
+
+    &.active,
+    &:hover {
+      border: 1px solid $primary;
+    }
+
+    #{$i} {
+      &-container {
+        border: none;
+
+        &_size {
+          &_base {
+            height: spacing(7.25);
+          }
+        }
+      }
+    }
+  }
+
+  &_hidden {
+    border: 0;
+    padding: 0 !important;
+    @include pos($l: 0, $b: spacing(-1.25));
+    @include square(0);
+  }
+
+  &__counter-control {
+    .svg-icon {
+      @include spaced-items(1, true);
+
+      &:first-child {
+        transform: rotate(180deg);
+      }
+
+      svg {
+        @include square(spacing(1.5), false, true);
+      }
+    }
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+    margin-left: spacing(1.25);
+    @include iconColor($primary, false, true);
+
+    &__icon {
+      &:not(:first-child) {
+        margin-left: spacing(1.25);
+      }
+
+      svg {
+        @include square(spacing(3) !important, false, true);
+      }
+    }
+  }
+
+  &.active {
+    color: $color-text-base;
+  }
+
+  &:disabled {
+    color: $color-text-base !important;
+  }
+
+  @include placeholder {
+    font-weight: 400;
+    color: $gray-dark;
+  }
+
+  &:focus {
+    @include placeholder {
+      color: transparent;
+    }
+  }
+
+  &-wrapper {
+    width: 100%;
+
+    .title-row__alert {
+      margin-top: spacing(0.625) !important;
+      display: block;
+    }
+
+    &.is-open {
+      .input-container {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    &.active {
+      @include iconColor($primary !important, false, true);
+      @include iconColor(transparent !important, false, false);
+
+      .input-container {
+        border-color: $primary !important;
+      }
+
+      .eye-closed > svg > path:nth-child(1) {
+        stroke: transparent !important;
+        fill: $primary !important;
+      }
+
+      .eye-closed > svg > path:nth-child(2) {
+        fill: $primary !important;
+      }
+    }
+
+    &.disabled {
+      .input-container {
+        background-color: $gray !important;
+        cursor: default;
+      }
+    }
+
+    &.alert,
+    &.active.alert {
+      .input-container {
+        border-color: $error !important;
+      }
+    }
+
+    &.focused {
+      &.active .eye-closed svg {
+        & > path:nth-child(2) {
+          stroke: $primary !important;
+        }
+
+        & * {
+          fill: $primary !important;
+          stroke: transparent !important;
+        }
+      }
+    }
+
+    &.visible-placeholder {
+      .input:focus {
+        @include placeholder {
+          color: $color-text-base;
+        }
+      }
+
+      &.focused .input-container {
+        background: transparent;
+      }
+    }
+
+    &:not(.disabled) {
+      .input-container:hover {
+        border-color: $primary;
+      }
+    }
+  }
+
+  &-error {
+    color: $error !important;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 12px !important;
+    display: flex;
+    align-items: center;
+  }
+
+  &-container {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    color: $base;
+    border-radius: spacing();
+    background-color: $base;
+    transition: all 300ms ease;
+    overflow: hidden;
+    border: 1px solid $gray;
+
+    i {
+      transform: translate(0, -50%);
+      @include pos($t: 50%);
+    }
+
+    &_size {
+      &_base {
+        height: spacing(6);
+        padding-right: spacing(2);
+
+        input {
+          font-size: $inputBaseFontSize;
+          padding: spacing(2) 0 spacing(2) spacing(2);
+        }
+
+        i {
+          text-align: center;
+          width: spacing(3);
+          font-size: 16px;
+          right: spacing(0.5);
+        }
+      }
+    }
+  }
+}

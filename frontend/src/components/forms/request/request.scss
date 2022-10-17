@@ -1,0 +1,22 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.request-form {
+  padding-top: 0 !important;
+
+  &__agree,
+  &__registration_matches {
+    margin-bottom: spacing(9) !important;
+  }
+
+  .profession_row_3,
+  .family_row,
+  .proxy_personal_row_2,
+  .passport_row_2 {
+    margin-bottom: spacing(5);
+  }
+
+  .payment_row {
+    margin-bottom: spacing(2);
+  }
+}

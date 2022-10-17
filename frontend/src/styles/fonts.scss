@@ -1,0 +1,27 @@
+/*
+ * StyreneALC
+ */
+
+@font-face {
+  font-family: 'StyreneALC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('StyreneALC Regular'), local('StyreneALC-Regular'), url('../fonts/StyreneALC/StyreneALC-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'StyreneALC';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local('StyreneALC Medium'), local('StyreneALC-Medium'), url('../fonts/StyreneALC/StyreneALC-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'StyreneALC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('StyreneALC Bold'), local('StyreneALC-Bold'), url('../fonts/StyreneALC/StyreneALC-Bold.otf') format('opentype');
+}

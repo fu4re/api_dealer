@@ -1,0 +1,39 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.selector {
+  $s: &;
+
+  &__row {
+    cursor: pointer;
+    color: $primary;
+    gap: spacing();
+    @include iconColor($primary, false, true);
+
+    svg {
+      @include square(spacing(1.25), false, true);
+    }
+  }
+
+  &.alt {
+    #{$s} {
+      &__row {
+        padding: spacing(1.625) spacing(2);
+        background: $base;
+        gap: spacing(2);
+        min-height: spacing(6);
+        border-radius: spacing();
+        border: 1px solid $gray;
+        color: $color-text-base;
+
+        svg {
+          @include square(spacing(1.5), false, true);
+        }
+
+        &.active {
+          border-color: $primary;
+        }
+      }
+    }
+  }
+}

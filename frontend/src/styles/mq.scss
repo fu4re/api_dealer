@@ -1,0 +1,11 @@
+$breakpoints: (
+  'laptop-xl': 1440px,
+);
+
+@import '~include-media/dist/include-media';
+
+@mixin laptop-xl {
+  @include media('<=laptop-xl') {
+    @content;
+  }
+}

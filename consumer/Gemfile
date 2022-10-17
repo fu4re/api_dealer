@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+gem 'bunny'
+gem 'daemons'
+gem 'require_all'
+gem 'faraday'
+gem 'jwt'
+
+# gem 'redis'
+
+group :development, :test do
+  gem 'byebug'
+  gem 'rubocop'
+end
+

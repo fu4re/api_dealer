@@ -1,0 +1,16 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.avatar {
+  $a: &;
+
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  @include iconColor($primary, false, true);
+  @include flex-center;
+
+  &-placeholder {
+    background: $primary-light;
+  }
+}

@@ -1,0 +1,37 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+@import 'styles/variables';
+
+.error-message {
+  max-width: $container-width;
+  padding: spacing(5) spacing(2);
+  @include flex-column;
+  @include form-container;
+
+  &,
+  &__icon {
+    @include flex-center;
+  }
+
+  &__icon,
+  &__text {
+    margin-bottom: spacing(3);
+  }
+
+  &__icon {
+    background-color: $error-weak;
+    @include square(spacing(10), true, true);
+
+    .svg-icon {
+      @include iconColor($error, false, true);
+
+      svg {
+        @include square(spacing(5), false, true);
+      }
+    }
+  }
+
+  &__title {
+    margin-bottom: spacing();
+  }
+}

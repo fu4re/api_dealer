@@ -1,0 +1,77 @@
+version: '3.7'
+services:
+  consumer:
+    build:
+      context: ./consumer
+      target: development
+    tty: true
+    stdin_open: true
+    command: ruby boot.rb
+    env_file: .env.development
+    entrypoint: sh bunny_waiter.sh
+    volumes:
+      - ./consumer:/opt/app
+
+  recognition:
+    build:
+      context: ./identity-recognition
+    tty: true
+    stdin_open: true
+    
+    depends_on:
+      - consumer
+
+  backend: &app
+    image: web
+    build:
+      context: ./backend
+      target: development
+    tty: true
+    stdin_open: true
+    env_file: .env.development
+    ports:
+      - "3000:3000"
+      - "9293:9293"
+    volumes:
+      - ./backend:/opt/app
+    depends_on:
+      - db
+
+  mockserver:
+    image: mockserver/mockserver:latest
+    command: -logLevel OFF -serverPort 1090
+    restart: always
+    ports:
+      - 1080:1090
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializerJson.json
+    volumes:
+      - type: bind
+        source: ./mockserver
+        target: /config
+
+
+  rabbitmq:
+    image: rabbitmq:3.11-management-alpine
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+  redis:
+    image: redis:7.0.5-alpine3.16
+    command: ["redis-server"]
+    env_file: .env.development
+    volumes:
+      - redis:/data
+    depends_on:
+        - consumer
+
+  db:
+    image: postgres:13.3-alpine
+    env_file: .env.development
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  redis:
+  postgres:

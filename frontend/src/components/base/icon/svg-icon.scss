@@ -1,0 +1,10 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.svg-icon {
+  @include flex-center;
+
+  &--clickable {
+    cursor: pointer;
+  }
+}

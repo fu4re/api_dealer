@@ -1,0 +1,582 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.DatePicker {
+  position: relative;
+  display: inline-block;
+  z-index: 10;
+
+  &__calendarArrow {
+    margin: 0 auto;
+    border-style: solid;
+    border-width: 0 spacing(1.25) spacing(1.25) spacing(1.25);
+    border-color: transparent transparent #fff transparent;
+    @include square(0);
+    @include pos($t: calc(100% + 10px), $l: 0, $r: 0, $z: 10);
+  }
+
+  &__calendarContainer {
+    transform: translateX(-50%);
+    @include pos($t: calc(100% + 20px), $l: 50%);
+  }
+}
+
+.Calendar {
+  overflow: hidden;
+  font-size: 10px;
+  background: $base;
+  box-shadow: 0 1em 4em rgba($black, 0.07);
+  border-radius: 1em;
+  user-select: none;
+  width: 33em;
+  max-width: 90vw;
+  min-height: 36.7em;
+  @include flex-column;
+  @include pos($pos: relative, $z: 10);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 2em 2.9em;
+    color: $black;
+  }
+
+  &__monthArrowWrapper {
+    line-height: 0;
+    font-size: 1em;
+    padding: spacing(0.375);
+    border: none;
+    opacity: 1;
+    transition: 0.2s;
+    @include pos($pos: relative, $z: 1);
+
+    &.-left {
+      transform: rotate(90deg);
+    }
+
+    &.-right {
+      transform: rotate(-90deg);
+    }
+
+    &:focus {
+      outline: 1px dashed rgba($black, 0.4);
+      outline-offset: spacing(0.25);
+    }
+
+    &:disabled,
+    &.-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:active .Calendar__monthArrow {
+      transform: scale(0.7);
+    }
+  }
+
+  &,
+  & * {
+    margin: 0;
+    box-sizing: border-box;
+    direction: ltr;
+  }
+
+  &,
+  &.-rtl * {
+    direction: rtl;
+  }
+
+  &.-noFocusOutline *:focus {
+    outline: none !important;
+  }
+
+  &__monthArrow {
+    display: block;
+    border-radius: 50%;
+    transition: var(--animation-duration) transform;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg class='nc-icon-wrapper' fill='%23000000'%3E%3Cdefs stroke='none'%3E%3C/defs%3E%3Cpath class='cls-1' d='M12 23.25V.75' fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5px'%3E%3C/path%3E%3Cpath class='cls-2' d='M22.5 11.25L12 .75 1.5 11.25' fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5px' fill-rule='evenodd'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    @include square(1.7em);
+  }
+
+  &__monthYearContainer {
+    flex: 1;
+    position: relative;
+  }
+
+  &__monthYear {
+    font-size: 1.6em;
+    font-weight: 500;
+    line-height: 1;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    transition: var(--animation-duration);
+    @include flex-center;
+    @include pos-fill;
+
+    &.-hiddenNext {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+
+    &.-hiddenPrevious {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+
+    &.-shown {
+      opacity: 1;
+      @include centered(true);
+    }
+
+    &.-shownAnimated {
+      animation: var(--animation-duration) FadeContentToCenter forwards;
+    }
+
+    & > * {
+      padding: 0.2em 0.5em;
+      border: 1px solid transparent;
+      transition: var(--animation-duration);
+      font-size: 1.05em;
+      transform: translateX(0);
+      will-change: transform;
+      border-radius: spacing(0.625);
+      @include flex-center;
+    }
+
+    &:not(.-shown) > *,
+    & > *.-hidden {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    &.-shown > *:hover,
+    & > *.-activeBackground {
+      background: $gray;
+    }
+
+    &:not(.-shown) > * {
+      pointer-events: none;
+    }
+
+    .Calendar {
+      &__yearText.-hidden {
+        transform: translateX(50%);
+        opacity: 0;
+      }
+
+      &__monthText.-hidden {
+        transform: translateX(-50%);
+        opacity: 0;
+      }
+    }
+  }
+
+  &__monthText {
+    margin-left: -0.3em;
+  }
+
+  &__yearText:last-child {
+    margin-right: -0.3em;
+  }
+
+  &:not(.-noFocusOutline) .Calendar__monthYear.-shown > *:focus {
+    background: $gray;
+  }
+
+  &__monthSelectorAnimationWrapper,
+  &__yearSelectorAnimationWrapper {
+    overflow: hidden;
+    @include flex-center;
+    @include pos($b: 0);
+    @include size(100%, 80%);
+  }
+
+  &__monthSelectorWrapper {
+    @include flex-center;
+    @include square(100%);
+  }
+
+  &__monthSelector {
+    width: 100%;
+    align-content: flex-start;
+    margin-top: 2em;
+    padding: 2em 1.5em;
+  }
+
+  &__monthSelector,
+  &__yearSelector {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $base;
+    transform: translateY(-150%);
+    will-change: transform;
+    transition: 0.6s;
+    height: 100%;
+    @include pos($pos: relative, $z: 2);
+
+    &.-open {
+      transform: translateY(0);
+    }
+  }
+
+  &__yearSelectorWrapper {
+    padding: 0 2em;
+    @include square(100%);
+
+    &::after,
+    &::before {
+      content: '';
+      opacity: 0;
+      transition: 0.4s;
+      transition-delay: 0.2s;
+      @include pos($l: 0);
+      @include size(100%, 5em);
+    }
+
+    &::after {
+      top: -0.1em;
+      background-image: linear-gradient(
+        to bottom,
+        $base,
+        $base,
+        rgba(245, 245, 245, 0)
+      );
+    }
+
+    &::before {
+      background-image: linear-gradient(to top, $base, $base 10%, rgba(245, 245, 245, 0));
+      bottom: 0;
+    }
+
+    &.-faded {
+      &::after,
+      &::before {
+        opacity: 1;
+        z-index: 3;
+      }
+    }
+  }
+
+  &__yearSelector {
+    scrollbar-width: 0;
+    overflow: scroll;
+    position: relative;
+    width: calc(100% + 40px);
+    padding: 3em 20px;
+    margin-left: -20px;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__yearSelectorItem {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+
+    &:not(:nth-child(-n + 4)) {
+      margin-top: 1.5em;
+    }
+  }
+
+  &__yearSelectorText {
+    border: 1px solid transparent;
+    font-size: 1.4em;
+    min-width: 85%;
+    padding: 0.2em 0.5em;
+    border-radius: 8.5px;
+  }
+
+  &__monthSelectorItem {
+    width: calc(100% * 0.33333); /* fixes IE rounding error */
+    display: flex;
+    justify-content: center;
+
+    &:not(:nth-child(-n + 3)) {
+      margin-top: 2em;
+    }
+  }
+
+  &__monthSelectorItemText {
+    border: 1px solid transparent;
+    padding: 0.4em 0.4em;
+    border-radius: 8.5px;
+    font-size: 1.3em;
+    min-width: 70%;
+    transition: 0.3s;
+  }
+
+  &__monthSelectorItemText,
+  &__yearSelectorText {
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &__monthSelectorItem.-active .Calendar__monthSelectorItemText,
+  &__yearSelectorItem.-active .Calendar__yearSelectorText {
+    background-color: var(--cl-color-primary);
+    color: $base !important;
+  }
+
+  &__weekDays {
+    display: flex;
+    justify-content: space-between;
+    color: $color-text-base;
+    font-size: 1.2em;
+    margin-bottom: 0.7em;
+    padding: 0 2.6em;
+    position: relative;
+  }
+
+  &__weekDay {
+    display: block;
+    width: calc(100% / 7);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  &__sectionWrapper {
+    position: relative;
+    flex: 1;
+  }
+
+  &__section {
+    padding: 0 3.2em;
+    color: $black;
+    padding-top: 0.5em;
+    width: 100%;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition: var(--animation-duration);
+    @include flex-column;
+    @include pos($t: 0, $l: 0);
+
+    &.-hiddenPrevious {
+      opacity: 0.5;
+      transform: translateX(-90%);
+    }
+
+    &.-hiddenNext {
+      opacity: 0.5;
+      transform: translateX(90%);
+    }
+
+    &.-shown {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    &.-shownAnimated {
+      animation: var(--animation-duration) FadeContentToCenter forwards;
+    }
+  }
+
+  &__weekRow {
+    display: flex;
+    width: 100%;
+  }
+
+  &__day {
+    width: calc(100% / 7);
+    cursor: pointer;
+    @include flex-center;
+
+    &.-selected,
+    &.-selectedStart,
+    &.-selectedEnd {
+      & .Calendar__day__inner {
+        background: var(--cl-color-primary);
+        color: $base;
+      }
+    }
+
+    &.-selectedBetween .Calendar__day__inner {
+      background: var(--cl-color-primary-light);
+      color: var(--cl-color-primary);
+      border-radius: 0;
+    }
+
+    &.-ltr.-selectedEnd .Calendar__day__inner {
+      border-top-right-radius: 100em;
+      border-bottom-right-radius: 100em;
+    }
+
+    &.-rtl.-selectedEnd .Calendar__day__inner {
+      border-top-left-radius: 100em;
+      border-bottom-left-radius: 100em;
+    }
+
+    &:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected)
+      .Calendar__day__inner:hover {
+      background: $gray;
+      border-radius: 50%;
+      color: $black;
+      border-color: transparent;
+    }
+
+    &.-weekend:not(.-selected):not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)
+      .Calendar__day__inner {
+      color: $error;
+    }
+
+    &.-weekend.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)
+      .Calendar__day__inner::after {
+      background: $error;
+    }
+
+    &.-disabled .Calendar__day__inner {
+      color: $color-text-base !important;
+      background: transparent !important;
+      cursor: default !important;
+    }
+
+    &.-selected .Calendar__day__inner {
+      border-radius: 50%;
+    }
+
+    &.-today:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)
+      .Calendar__day__inner {
+      font-weight: 600;
+      color: $black;
+      color: $black;
+      position: relative;
+
+      &::after {
+        background: $black;
+        opacity: 0.5;
+        transform: translateX(-50%);
+        transition: 0.2s;
+        @include pseudo;
+        @include pos($l: 50%, $b: 0.2em);
+        @include size(0.6em, spacing(0.125));
+      }
+    }
+
+    &.-today:hover:not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween)
+      .Calendar__day__inner::after {
+      opacity: 0;
+    }
+
+    &.-blank {
+      pointer-events: none;
+
+      .Calendar__day__inner {
+        color: transparent;
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+
+    &__inner {
+      text-align: center;
+      padding: calc(0.25em - 1px) 0;
+      font-size: 1.6em;
+      border-radius: 50%;
+      transition: 0.2s;
+      border: 1px solid transparent;
+      color: rgba($black, 0.8);
+      cursor: pointer;
+      @include flex-center;
+
+      &:focus {
+        outline: 1px dashed rgba($black, 0.4);
+        outline-offset: spacing(0.25);
+      }
+    }
+  }
+
+  &.-ltr {
+    .Calendar {
+      &__day__inner {
+        min-height: 2.6em;
+        font-size: 1.45em;
+      }
+    }
+
+    &.-selectedStart .Calendar__day__inner {
+      border-radius: 0;
+      border-top-left-radius: 100em;
+      border-bottom-left-radius: 100em;
+    }
+  }
+
+  &.-rtl {
+    .Calendar {
+      &__monthArrowWrapper {
+        &.-left {
+          transform: rotate(-90deg);
+        }
+
+        &.-right {
+          transform: rotate(90deg);
+        }
+      }
+
+      &__monthYear {
+        &.-hiddenNext {
+          transform: translateX(-100%);
+        }
+
+        &.-hiddenPrevious {
+          transform: translateX(100%);
+        }
+
+        .Calendar__yearText.-hidden {
+          transform: translateX(-50%);
+        }
+
+        .Calendar__monthText.-hidden {
+          transform: translateX(50%);
+        }
+      }
+
+      &__section {
+        &.-hiddenPrevious {
+          transform: translateX(90%);
+        }
+
+        &.-hiddenNext {
+          transform: translateX(-90%);
+        }
+      }
+
+      &__day {
+        &__inner {
+          font-size: 1.55em;
+          height: 2.45em;
+        }
+      }
+    }
+
+    &.-selectedStart .Calendar__day__inner {
+      border-radius: 0;
+      border-top-right-radius: 100em;
+      border-bottom-right-radius: 100em;
+    }
+  }
+
+  button {
+    font-family: inherit;
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+}
+
+@keyframes FadeContentToCenter {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

@@ -1,0 +1,19 @@
+/*
+ * Basic Utils
+ */
+
+/// Map deep get
+/// @param {Map} $map - Map
+/// @param {Arglist} $keys - Key chain
+/// @return {*} - Desired value
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
+@function to-rem($px) {
+  $default-font-size: 16;
+  @return $px / $default-font-size * 1rem;
+}

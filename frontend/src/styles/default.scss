@@ -1,0 +1,88 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+@import 'styles/variables';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  &,
+  &:before,
+  &:after {
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    outline: none !important;
+  }
+
+  &:focus {
+    outline: none !important;
+  }
+
+  &::-webkit-scrollbar {
+    $size: spacing(0.5);
+
+    width: $size;
+    background-color: $base;
+
+    &:horizontal {
+      width: auto;
+      height: $size;
+    }
+
+    // Vertical Scroll
+    &-thumb {
+      background-clip: padding-box;
+      width: $size;
+      background-color: $primary;
+      border-radius: spacing(2);
+
+      // Horizontal Scroll
+      &:horizontal {
+        background-clip: padding-box;
+        height: $size;
+        background-color: $primary;
+      }
+    }
+  }
+}
+
+.container {
+  max-width: $container-width;
+  padding: 0 spacing(3);
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+input,
+textarea {
+  &:not(:disabled):not(.disabled) {
+    -webkit-user-select: text !important;
+    -khtml-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    background-color: $base !important;
+
+    &:-webkit-autofill {
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        transition: background-color 5000s ease-in-out 0s !important;
+        -webkit-box-shadow: 0 0 0 spacing(125) $base inset !important;
+        box-shadow: 0 0 0 spacing(125) $base inset !important;
+      }
+    }
+  }
+}

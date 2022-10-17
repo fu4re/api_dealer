@@ -1,0 +1,74 @@
+@import 'styles/mixins';
+@import 'styles/utils';
+
+//
+// Configs
+//
+
+$basic: (
+  'xxl': (
+    'size': 40,
+    'line': 1.1,
+    'weight': 700,
+  ),
+  'xl': (
+    'size': 28,
+    'line': 1.1,
+    'weight': 700,
+  ),
+  'lg': (
+    'size': 20,
+    'line': 1.4,
+    'weight': 700,
+  ),
+  'md': (
+    'size': 16,
+    'line': 1.25,
+  ),
+  'sm': (
+    'size': 14,
+    'line': 1.15,
+  ),
+);
+
+//
+// Utilities
+//
+
+@mixin text-size($map, $key) {
+  $size: map-deep-get($map, $key, 'size');
+  font-size: to-rem($size);
+
+  $mqs: map-deep-get($map, $key, 'mqs');
+  @if ($mqs) {
+    @each $mq, $value in $mqs {
+      @include media('<#{$mq}') {
+        font-size: to-rem($value);
+      }
+    }
+  }
+}
+
+@mixin text-settings($map, $key, $mqs: false) {
+  @include text-size($map, $key);
+  line-height: map-deep-get($map, $key, 'line');
+  $spacing: map-deep-get($map, $key, 'spacing');
+  $weight: map-deep-get($map, $key, 'weight');
+  @if ($spacing) {
+    letter-spacing: $spacing;
+  }
+  @if ($weight) {
+    font-weight: $weight !important;
+  }
+  transition: color 300ms;
+}
+
+//
+// Generating text classes
+//
+
+@each $key, $value in $basic {
+  .text-#{$key} {
+    @include text-settings($basic, $key);
+  }
+}

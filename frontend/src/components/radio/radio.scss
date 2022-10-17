@@ -1,0 +1,128 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.radio {
+  margin: spacing(2.25) 0;
+  display: flex;
+  align-items: baseline;
+
+  &.disabled {
+    pointer-events: none;
+
+    label {
+      &:before {
+        border-color: $gray !important;
+        background: $gray !important;
+      }
+    }
+  }
+
+  label {
+    color: $color-text-base;
+
+    &:before,
+    &:after {
+      transition: all 300ms ease;
+    }
+  }
+
+  &:hover {
+    label {
+      color: $color-text-base;
+
+      &:before {
+        border-color: $primary-middle;
+      }
+
+      &:after {
+        background: $primary-middle;
+      }
+    }
+  }
+
+  .hint-icon {
+    margin-left: spacing(1.25);
+  }
+}
+
+.radio-group {
+  &--inline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: spacing(-0.5) spacing(-1);
+
+    .radio {
+      margin: spacing(0.5) spacing();
+    }
+  }
+}
+
+input[type='radio'] {
+  position: absolute;
+  visibility: hidden;
+
+  + label {
+    line-height: spacing(3);
+    position: relative;
+    padding-left: spacing(4.25);
+    cursor: pointer;
+    display: inline-block;
+
+    &:before {
+      content: '';
+      border: 1px solid $gray;
+      box-sizing: border-box;
+      @include square(spacing(3), true);
+      @include pos($l: 0, $t: 0);
+    }
+
+    &:after {
+      content: '';
+      -webkit-transition: all 0.2s ease;
+      transition: all 0.2s ease;
+      background: $primary;
+      @include square(spacing(2), true);
+      @include pos($l: spacing(0.5), $t: spacing(0.5));
+    }
+  }
+
+  &:not(:checked) + label {
+    &:after {
+      opacity: 0;
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    }
+  }
+
+  &:checked + label {
+    color: $color-text-base;
+
+    &:after {
+      opacity: 1;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+
+    &:before {
+      border: 1px solid $primary;
+    }
+  }
+}
+
+.radio-input {
+  &--small {
+    input[type='radio'] + label {
+      line-height: spacing(2.25);
+      padding-left: spacing(2.75);
+
+      &:before {
+        @include square(spacing(2));
+      }
+
+      &:after {
+        @include square(spacing());
+      }
+    }
+  }
+}

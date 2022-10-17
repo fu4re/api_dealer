@@ -1,0 +1,63 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.reports {
+  padding-bottom: spacing(3);
+  
+  .no-items {
+    margin: spacing(3) auto;
+  }
+
+  &-content {
+    @include spaced-items(5, true);
+
+    &__header {
+      gap: spacing(3);
+      margin-bottom: spacing(5);
+    }
+
+    &__row {
+      gap: spacing(12);
+    }
+  }
+
+  &__tabs {
+    width: 100%;
+
+    .tabs__content {
+      position: relative;
+    }
+  }
+
+  &__preloader {
+    @include absolute-center;
+  }
+
+  &__card {
+    padding: 0 0 spacing();
+    margin-top: spacing(3);
+    overflow: hidden;
+  }
+
+  &__filter {
+    gap: spacing(2);
+
+    &-button {
+      @include size(spacing(8.25), spacing(6));
+    }
+    
+    & > .input {
+      min-width: spacing(51.5);
+    }
+
+    .input-container {
+      transition: none;
+    }
+
+    .button {
+      svg {
+        @include square(spacing(3), false, true);
+      }
+    }
+  }
+}

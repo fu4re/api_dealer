@@ -1,0 +1,55 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.text {
+  &.uppercase {
+    text-transform: uppercase;
+  }
+
+  &.center {
+    text-align: center;
+  }
+
+  &.right {
+    text-align: right;
+  }
+
+  &.crossed {
+    text-decoration: line-through;
+  }
+
+  &.underline {
+    text-decoration: underline;
+  }
+
+  &.primary {
+    color: $primary;
+  }
+
+  &-overflow {
+    position: relative;
+
+    &.collapsible {
+      cursor: pointer;
+    }
+
+    &__content {
+      line-height: 25px;
+    }
+
+    &__inner {
+      transition: height 300ms;
+      overflow: hidden;
+    }
+
+    .more {
+      color: $primary;
+      margin-top: spacing(0.5);
+    }
+  }
+
+  &-title {
+    padding: spacing(2) 0;
+    gap: spacing(2);
+  }
+}

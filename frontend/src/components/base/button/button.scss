@@ -1,0 +1,171 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+@mixin interactive() {
+  &:not(.disabled):not(.fetching) {
+    @content;
+  }
+}
+
+@mixin styling($color, $text-color: $base) {
+  /// Filled variant
+  &.filled {
+    border: 1px solid $color;
+    background-color: $color;
+    @include iconColor($text-color, false, true);
+
+    .text {
+      color: $text-color;
+    }
+
+    .preloader div::before {
+      background-color: $text-color !important;
+    }
+
+    &.invert {
+      border: 1px solid $text-color;
+      background-color: $text-color;
+      @include iconColor($color, false, true);
+
+      .text {
+        color: $color;
+      }
+
+      .preloader div::before {
+        background-color: $color !important;
+      }
+    }
+  }
+
+  /// Outline variant
+  &.outline {
+    border: 1px solid $color;
+
+    .text {
+      color: $color;
+    }
+
+    .preloader div::before {
+      background-color: $color !important;
+    }
+  }
+
+  /// Text variant
+  &.text {
+    padding: 0;
+
+    .text {
+      color: $color-text-base;
+    }
+
+    .preloader div::before {
+      background-color: $color-text-base !important;
+    }
+
+    &:hover {
+      .text {
+        color: darken($color-text-base, 40%);
+      }
+    }
+  }
+}
+
+.button {
+  position: relative;
+  border: none;
+  outline: none;
+  user-select: none;
+  white-space: nowrap;
+  border-radius: spacing();
+  padding: spacing(2) spacing(3);
+  @include flex-center(true);
+
+  &,
+  &:hover,
+  &:active {
+    transition: all 0.3s ease;
+  }
+
+  &.stretch {
+    display: flex;
+    width: 100%;
+  }
+
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    background-color: $gray !important;
+    border-color: $gray !important;
+
+    .text {
+      color: rgba($color-text-base, 0.5) !important;
+    }
+  }
+
+  &-text {
+    text-align: center;
+    transition: color 300ms;
+  }
+
+  &-icon {
+    @include iconSize(spacing(2));
+  }
+
+  .preloader {
+    max-height: 60% !important;
+    @include square((spacing(3.5) !important));
+  }
+
+  &.with-text {
+    .button-icon {
+      &--start {
+        margin-right: spacing();
+      }
+
+      &--end {
+        margin-left: spacing();
+      }
+    }
+  }
+
+  /// Theming
+
+  &.base {
+    @include styling($primary);
+
+    @include interactive {
+      &:hover {
+        @include styling($primary-middle);
+      }
+
+      &:active {
+        @include styling($primary);
+      }
+    }
+  }
+
+  &.transparent {
+    border: 1px solid transparent;
+
+    @include interactive {
+      &:hover {
+        @include styling($primary-middle);
+      }
+
+      &:active {
+        @include styling($primary);
+      }
+    }
+  }
+
+  /// Sizes
+
+  &.small {
+    padding: spacing() spacing(2);
+    border-radius: spacing();
+  }
+}

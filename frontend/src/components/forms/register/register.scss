@@ -1,0 +1,26 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.register {
+  @include auth-form;
+
+  &-form {
+    margin: spacing(3) spacing(2);
+    max-width: spacing(90);
+
+    &__buttons {
+      flex-direction: row;
+    }
+
+    &__avatar {
+      margin: 0 auto;
+      margin-bottom: spacing(3);
+      gap: spacing(1.25);
+      @include flex-column;
+
+      svg {
+        @include square(spacing(9.375), false, true);
+      }
+    }
+  }
+}

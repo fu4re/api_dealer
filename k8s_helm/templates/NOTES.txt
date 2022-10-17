@@ -1,0 +1,2 @@
+Для доступа к приложению перейдите в браузере по ссылке
+vstolyarov-{{ .Release.Name }}-app.app.cs.phoenixit.ru

@@ -1,0 +1,53 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.header {
+  gap: spacing(2);
+  margin-bottom: spacing(4);
+  padding-top: spacing(4) !important;
+
+  &__avatar {
+    cursor: pointer;
+    border: 1px solid $gray;
+    border-radius: 50%;
+  }
+
+  &__content {
+    padding: spacing() spacing(1.5);
+
+    &-text {
+      white-space: nowrap;
+    }
+
+    &-exit {
+      cursor: pointer;
+
+      &:hover {
+        color: $primary-middle;
+      }
+    }
+
+    &-rows {
+      margin-bottom: spacing(2);
+    }
+
+    &-item {
+      gap: spacing(1.25);
+      @include spaced-items(1.5, true);
+      @include iconColor($primary, false, true);
+
+      svg {
+        @include square(spacing(3), false, true);
+      }
+
+      .mail {
+        margin-left: spacing(0.25);
+        transform: translateY(spacing(0.25));
+
+        svg {
+          @include square(spacing(2.75), false, true);
+        }
+      }
+    }
+  }
+}

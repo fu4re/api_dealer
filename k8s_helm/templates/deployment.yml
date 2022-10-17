@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-{{ .Release.Name }}-deployment
+  labels:
+    app: backend
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: backend
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: web
+        image: harbor.bankingapi.ru/api-dealer/backend@sha256:4a72853a4cb1f7eae6b99c59fcac058025a442f029c4bb41b3773e1a591e2ecc
+        ports:
+          - containerPort: 3000
+        env:
+          - name: SECRET_KEY_BASE
+            value: 06a36e3ec5e3e6beaf2544205f072640
+          - name: RAILS_LOG_TO_STDOUT
+            value: 'true'
+          - name: CONTROL_TOKEN
+            value: afe65bcd93be0f27d04415f68b9b6ca33f909553ad54c3966cd719a7e44606c1
+          - name: BACKEND_API_JWT_SECRET
+            value: 0ef56e86a383ca46534739966ec1b324
+          - name: BACKEND_BUNNY_JWT_SECRET
+            value: d3069ec1fa66ebdffb30d82411318fe5
+          - name: BACKEND_STORAGE_URL
+            value: http://localhost:3000                    
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-postgresql
+                key: postgres-password
+          - name: DATABASE_URL
+            value: postgresql://postgres:$(PGPASSWORD)@db-postgresql:5432/backend_db?pool=5
+      imagePullSecrets:
+        - name: regcred
+      initContainers:
+        - name: init-db
+          command: ["bundle", "exec", "rake", "db:prepare"]
+          image: harbor.bankingapi.ru/api-dealer/backend@sha256:4a72853a4cb1f7eae6b99c59fcac058025a442f029c4bb41b3773e1a591e2ecc
+          ports:
+            - containerPort: 3000
+          env:
+            - name: SECRET_KEY_BASE
+              value: 06a36e3ec5e3e6beaf2544205f072640
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
+            - name: CONTROL_TOKEN
+              value: afe65bcd93be0f27d04415f68b9b6ca33f909553ad54c3966cd719a7e44606c1
+            - name: BACKEND_API_JWT_SECRET
+              value: 0ef56e86a383ca46534739966ec1b324
+            - name: BACKEND_BUNNY_JWT_SECRET
+              value: d3069ec1fa66ebdffb30d82411318fe5
+            - name: BACKEND_STORAGE_URL
+              value: http://localhost:3000                    
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-postgresql
+                  key: postgres-password
+            - name: DATABASE_URL
+              value: postgresql://postgres:$(PGPASSWORD)@db-postgresql:5432/backend_db?pool=5

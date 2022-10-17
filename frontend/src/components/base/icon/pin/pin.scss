@@ -1,0 +1,36 @@
+@import "styles/colors";
+@import "styles/mixins";
+
+.pin-icon {
+  height: 100%;
+  position: relative;
+  @include flex-center;
+  @include icon(spacing(2));
+  @include iconColor($base, false, true);
+
+  svg * {
+    transition: all 300ms ease;
+  }
+
+  &:hover {
+    @include iconColor($primary-middle, false, true);
+  }
+
+  &.active {
+    opacity: 1 !important;
+    @include iconColor($primary, false, true);
+  }
+}
+
+.dropmenu__item {
+  .pin-icon {
+    opacity: 0;
+    margin-left: spacing(0.75);
+  }
+
+  &:hover {
+    .pin-icon {
+      opacity: 1;
+    }
+  }
+}

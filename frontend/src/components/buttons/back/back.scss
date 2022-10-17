@@ -1,0 +1,23 @@
+@import 'styles/mixins';
+@import 'styles/colors';
+
+.back-button {
+  cursor: pointer;
+  gap: spacing(1.5);
+  @include iconColor($color-text-base, false, true);
+
+  .svg-icon {
+    margin-top: spacing(0.25);
+    transition: all 300ms ease;
+  }
+
+  &:hover {
+    .svg-icon {
+      transform: translateX(spacing(-0.5));
+    }
+  }
+
+  svg {
+    @include square(spacing(3.5), false, true);
+  }
+}

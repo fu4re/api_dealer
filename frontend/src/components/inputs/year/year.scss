@@ -1,0 +1,6 @@
+@import 'styles/colors';
+@import 'styles/mixins';
+
+.year-picker {
+  @include picker-container;
+}
