@@ -3,7 +3,7 @@
 ## Установка с помощью docker-compose 
 
 ```sh
-git clone --recursive git@gitlab.bankingapi.ru:vtb-api/api-dealer.git
+git clone git@github.com:fu4re/api_dealer.git
 cd api-dealer
 docker-compose build
 docker-compose up
